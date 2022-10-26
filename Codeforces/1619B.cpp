@@ -1,31 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pii;
+typedef vector<ll> vll;
+typedef pair<ll,ll> pll;
+typedef map<int,int> mpii;
+typedef map<ll,ll> mpll;
+#define pb push_back
+#define forn(z) for (int i=0; i<z; i++)
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(NULL)
 
 int main() {
-	int n;
-	cin >> n;
-	int arr[2*n];
-	for (int i=0; i<2*n; i++) {
-		cin >> arr[i];
-	}
-	sort(arr, arr+2*n);
-	int ans=9999;
-	for (int i=0; i<2*n-1; i++) {
-		for (int j=i+1; j<2*n; j++) {
-			int sum=0;
-			int arr2[2*(n-1)];
-			int count=0;
-			for (int k=0; k<2*n; k++) {
-				if (k!=i&&k!=j) {
-					arr2[count]=arr[k];
-					count++;
-				}
-			}
-			for (int k=0; k<2*(n-1); k+=2) {
-				sum+=arr2[k+1]-arr2[k];
-			}
-			ans=min(sum, ans);
+	fastIO;
+	int t;
+	cin >> t;
+	while (t--) {
+		int n;
+		cin >> n;
+		set<int> ans;
+		for (int i=1; i<=sqrt(n); i++) {
+			ans.insert(i*i);
 		}
+		for (int i=1; i<=cbrt(n); i++) {
+			ans.insert(i*i*i);
+		}
+		cout << ans.size() << "\n";
 	}
-	cout << ans << "\n";
 }
