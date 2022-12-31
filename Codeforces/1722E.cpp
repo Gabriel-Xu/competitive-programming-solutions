@@ -5,39 +5,50 @@ typedef vector<int> vi;
 typedef pair<int,int> pii;
 typedef vector<ll> vll;
 typedef pair<ll,ll> pll;
-typedef map<int,int> mpii;
-typedef map<ll,ll> mpll;
 #define pb push_back
-#define forn(z) for (int i=0; i<z; i++)
-#define fastIO ios_base::sync_with_stdio(false); cin.tie(NULL)
+#define forn(z) for(int i=0; i<z; i++)
+#define forn2(z) for(int j=0; j<z; j++)
+#define fastIO ios_base::sync_with_stdio(false);cin.tie(NULL)
 
 int main() {
 	fastIO;
 	int t;
 	cin >> t;
-	while (t--) {
-		int n, q;
-		cin >> n >> q;
-		ll ps[1001][1001];
-		memset(ps, 0, sizeof(ps));
-		for (int i=0; i<n; i++) {
-			int a, b;
-			cin >> a >> b;
-			ps[a][b]+=a*b;
+	while(t--) {
+		int n;
+		cin >> n;
+		int p1=0, both=0, p2=0;
+		forn(n) {
+			int x;
+			cin >> x;
+			if(x!=i+1&&x!=n-i) both++;
+			else if(x!=i+1) p1++;
+			else if(x!=n-i) p2++;
 		}
-		for (int i=1; i<=1000; i++) {
-			for (int j=1; j<=1000; j++) {
-				ps[i][j]+=ps[i-1][j]+ps[i][j-1]-ps[i-1][j-1];
+		string ans;
+		debug(p1, both, p2);
+		while(true) {
+			if(p1==0&&both==0) {
+				ans="First";
+				break;
 			}
-		}
-		while (q--) {
-			int hs, ws, hb, wb;
-			cin >> hs >> ws >> hb >> wb;
-			if (hs+1==hb||ws+1==wb) {
-				cout << "0\n";
-				continue;
+			if(p2==0&&both==0) {
+				ans="Second";
+				break;
 			}
-			cout << ps[hb-1][wb-1]-ps[hs][wb-1]-ps[hb-1][ws]+ps[hs][ws] << "\n";
+			if(p1==0&&p2==0&&both!=0) {
+				ans="Tie";
+				break;
+			}
+			if(p1!=0) p1--;
+			else both--;
+			if(p1==0&&p2==0&&both!=0) {
+				ans="Tie";
+				break;
+			}
+			if(p2!=0) p2--;
+			else both--;
 		}
+		cout << ans << "\n";
 	}
 }
